@@ -74,7 +74,7 @@ This code outputs `0A0B` as expected.
 The way that this works is that _PunnedRegister_ can either be accessed as single a 16-bit integer or as a struct of two 8-bit integers (which is anonymous, so the integers can be accessed transparently).
 When accessed as one of the two 8-bit integers, either the left or right half of the 16-bit value is accessed -- when accessed as a 16-bit integer, the combination of the two 8-bit integers is accessed.
 
-# The final representation
+## The final representation
 
 Using mixins to reduce the amount of repetitive code, this is how the registers will be represented in the emulator:
 

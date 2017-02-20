@@ -166,7 +166,7 @@ Because using unions for type punning is undefined behavior in C++ (it&rsquo;s a
 <p>The way that this works is that <em>PunnedRegister</em> can either be accessed as single a 16-bit integer or as a struct of two 8-bit integers (which is anonymous, so the integers can be accessed transparently).
 When accessed as one of the two 8-bit integers, either the left or right half of the 16-bit value is accessed &ndash; when accessed as a 16-bit integer, the combination of the two 8-bit integers is accessed.</p>
 
-<h1 id="the-final-representation">The final representation</h1>
+<h2 id="the-final-representation">The final representation</h2>
 
 <p>Using mixins to reduce the amount of repetitive code, this is how the registers will be represented in the emulator:</p>
 
