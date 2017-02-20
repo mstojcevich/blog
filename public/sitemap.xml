@@ -2,7 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.org/</loc>
+    <loc>https://example.org/post/d-gb-emu-registers/</loc>
+    <lastmod>2017-02-18T15:39:51-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.org/</loc>
+    <lastmod>2017-02-18T15:39:51-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://example.org/post/</loc>
+    <lastmod>2017-02-18T15:39:51-05:00</lastmod>
     <priority>0</priority>
   </url>
   

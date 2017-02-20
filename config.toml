@@ -1,6 +1,6 @@
 # Site settings
 baseurl = "https://example.org/"
-publishDir = "docs"
+publishDir = "public"
 languageCode = "en-us"
 title = "Marcus's Blog"
 theme = "hugo-cactus-theme"
