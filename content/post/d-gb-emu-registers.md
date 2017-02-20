@@ -1,5 +1,5 @@
 +++
-draft = true
+draft = false
 date = "2017-02-18T15:39:51-05:00"
 title = "Writing a Gameboy emulator in D: Part 1 - Registers"
 
