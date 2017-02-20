@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Marcus&#39;s Blog</title>
-    <link>https://example.org/index.xml</link>
+    <link>https://mstojcevich.github.io/index.xml</link>
     <description>Recent content on Marcus&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 18 Feb 2017 15:39:51 -0500</lastBuildDate>
-    <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mstojcevich.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Writing a Gameboy emulator in D: Part 1 - Registers</title>
-      <link>https://example.org/post/d-gb-emu-registers/</link>
+      <link>https://mstojcevich.github.io/post/d-gb-emu-registers/</link>
       <pubDate>Sat, 18 Feb 2017 15:39:51 -0500</pubDate>
       
-      <guid>https://example.org/post/d-gb-emu-registers/</guid>
+      <guid>https://mstojcevich.github.io/post/d-gb-emu-registers/</guid>
       <description>
 
 &lt;h1 id=&#34;about-the-gameboy-cpu&#34;&gt;About the Gameboy CPU&lt;/h1&gt;
