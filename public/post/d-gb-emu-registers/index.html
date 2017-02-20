@@ -47,7 +47,7 @@ The registers of the Gameboy CPU are identical to those of the 8080. Each main r
 
 
 <meta itemprop="dateModified" content="2017-02-18T15:39:51-05:00" />
-<meta itemprop="wordCount" content="1037">
+<meta itemprop="wordCount" content="1015">
 
 
 
@@ -100,7 +100,7 @@ The registers of the Gameboy CPU are identical to those of the 8080. Each main r
 
 <p>The Gameboy uses a custom 8-bit Sharp LR35902 CPU (henceforth referred to as the &ldquo;Gameboy CPU&rdquo;), which uses a modified version of the <a href="https://en.wikipedia.org/wiki/Zilog_Z80">Zilog Z80</a> instruction set, which itself is based on the <a href="https://en.wikipedia.org/wiki/Intel_8080">Intel 8080</a>.</p>
 
-<p>The registers of the Gameboy CPU are identical to those of the 8080. Each main register is 8 bits wide, though in many instructions the regsiters can be accessed as groups of two adjacent registers, and are then treated as 16-bit; for example, the register <em>AF</em> is a combination of <em>A</em> and <em>F</em> with the bits of <em>A</em> used as the most significant and <em>F</em> as least significant. A table of the registers is seen below.</p>
+<p>The registers of the Gameboy CPU are identical to those of the 8080. Each main register is 8 bits wide, though in many instructions the regsiters can be accessed as groups of two adjacent registers, and are then treated as 16-bit; for example, the register <em>AF</em> is a combination of <em>A</em> and <em>F</em> with the bits of <em>A</em> used as the most significant and <em>F</em> as least significant. A table of the registers is seen below:</p>
 
 <p>$$
 \begin{array}{r l}
@@ -119,26 +119,26 @@ $$</p>
 
 <p>The observant will notice that for <em>SP</em> and <em>PC</em>, the letters are right next to each other while the others are spaced out;
 this is not a typo, as these registers are special in that they are always treated as 16 bits wide. <em>SP</em> indicates the stack pointer and <em>PC</em> indicates the program counter.
-This registers typically cannot be modified the same as others can, only being accessable using special operations.</p>
+These registers typically cannot be modified the same as others can, only being accessable using special operations.</p>
 
 <p>Another &ldquo;special&rdquo; register is <em>HL</em> &ndash; while this register is treated the same as the normal registers in that the 8-bit halves are registers on their own, <em>HL</em> is often used in operations as a pointer to memory.</p>
 
 <h1 id="representing-the-registers-in-d">Representing the registers in D</h1>
 
-<p>Due to the way that the registers can be accessed individually or grouped by two, there are quite a few ways that differnt Gameboy emulators choose to represent them.</p>
+<p>Because the registers can be accessed individually or grouped by two, there are quite a few ways that different Gameboy emulators choose to represent them.</p>
 
 <p>Many emulators written in Java and C++ encapsulate each register pair within an object, holding either two 8-bit integers or one 16-bit integer, with helper methods to set the halves or the whole, which usually will use bit manipulation tricks as <a href="https://en.wikipedia.org/wiki/Type_punning">type-punning</a> isn&rsquo;t possible or is undefined.</p>
 
-<p>When I started this emulator project, I used C++, and part of the reason that I decided to switch to using D was how hacky my workaround for storing registers without needing bit manipulation was.
-Because using unions for type punning is undefined behavior in C++ (it&rsquo;s actually allowed in C), I had to resort to trickier methods. In order to work around this (using a method that is probably worse than using the undefined behavior), I used some pointer and casting magic: I allocated an array of 8-bit integers large enough to fit all of the registers, and created pointers to 8-bit and 16-bit integers to refer to the individual registers and register groups respectively. This is very hacky, and, without looking too far into the C++ specification, I would assume that this trick would result in different values when reading the 16-bit register groups on host machines with different endianness.</p>
+<p>When I started this emulator project, I used C++. Part of the reason that I decided to switch to D was my hacky workaround for storing registers without needing bit manipulation.
+Because using unions for type punning is undefined behavior in C++ (it&rsquo;s actually allowed in C), I had to resort to trickier methods. Using a method that is probably worse than using the aforementioned undefined behavior, I resorted pointer and casting magic: I allocated an array of 8-bit integers large enough to fit all of the registers, and created pointers to 8-bit and 16-bit integers to refer to the individual registers and register groups respectively. This is very hacky, and, without looking too far into the C++ specification, I would assume that this trick would result in different values when reading the 16-bit register groups on host machines with different endianness.</p>
 
 <p>So, can D do this better? Despite not being very familiar with the D &ldquo;way&rdquo; of doing things (this is my first project in D), I have come up with a way that is at least better than what I was doing in C++.</p>
 
 <h3 id="type-punning-using-unions">Type punning using unions</h3>
 
-<p>I mentioned type punning using unions already, when talking about how it wasn&rsquo;t possible in C++. As far as I can tell from skimming the web, punning with unions is defined in D, and it is the best way that I can think of to represent the registers. I&rsquo;m not sure if this will cause issues with different endianness (it probably will), but I have no easy way to check, and I&rsquo;m only worried about x86 for now. If endianness matters, I&rsquo;ll update this blog entry.</p>
+<p>I mentioned type punning using unions already, when talking about how it wasn&rsquo;t possible in C++. As far as I can tell from skimming the web, punning with unions is defined in D, and it is the best way that I can think of to represent the registers. This may cause issues with different endianness (it probably will), but I have no easy way to check and I&rsquo;m only worried about x86 for now. If endianness matters, I&rsquo;ll update this blog entry.</p>
 
-<p>If you are unfamiliar with unions, they essentially allow you to use a single variable as multiple types. They are similar to structs, except instead of storing multiple values, they store a single value in multiple ways. Unions are the size of the largest member. Hopefully an example will say more than my poor attempt at explanation.</p>
+<p>If you are unfamiliar with unions, they essentially allow you to use a single variable as multiple types. They are similar to structs, except instead of storing multiple values, they store a single value in multiple ways. Unions are the size of the largest member. Hopefully an example will say more than words.</p>
 
 <p>To explain type punning using unions, I will use the following example:</p>
 
