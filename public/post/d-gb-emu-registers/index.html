@@ -47,7 +47,7 @@ The registers of the Gameboy CPU are identical to those of the 8080. Each main r
 
 
 <meta itemprop="dateModified" content="2017-02-18T15:39:51-05:00" />
-<meta itemprop="wordCount" content="1015">
+<meta itemprop="wordCount" content="1169">
 
 
 
@@ -204,6 +204,65 @@ When accessed as one of the two 8-bit integers, either the left or right half of
 <p>Because the <em>SP</em> and <em>PC</em> have letters that are shared with individual registers, they can&rsquo;t use the same method of representation as the other registers.</p>
 
 <p>The only downside that I&rsquo;ve noticed so far is that my editor doesn&rsquo;t like to autocomplete the registers.</p>
+
+<h1 id="setting-some-defaults">Setting some defaults</h1>
+
+<p>The Gameboy has a <a href="http://gbdev.gg8.se/wiki/articles/Gameboy_Bootstrap_ROM">bootstrap rom</a> (shield your eyes from the content, it&rsquo;s under copyright) that does some housekeeping on boot, then makes itself invisible. These instructions have some side effects, both on the memory and on the registers. To determine the register side effects, I decided to run another emulator with an empty rom, then read the register values. The values I got are as follows:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">Register</th>
+<th align="center">Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">AF</td>
+<td align="center">01B0</td>
+</tr>
+
+<tr>
+<td align="center">BC</td>
+<td align="center">0013</td>
+</tr>
+
+<tr>
+<td align="center">DE</td>
+<td align="center">00D8</td>
+</tr>
+
+<tr>
+<td align="center">HL</td>
+<td align="center">014D</td>
+</tr>
+
+<tr>
+<td align="center">SP</td>
+<td align="center">FFFE</td>
+</tr>
+
+<tr>
+<td align="center">PC</td>
+<td align="center">0100</td>
+</tr>
+</tbody>
+</table>
+
+<p>While most games probably don&rsquo;t care about what the initial values of the registers are, I wanted to implement the values anyway for completion sake.
+I set these values after declaring the registers:
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%"><span></span><span style="color: #75715e">// Initialize like the original bootstrap rom</span>
+<span style="color: #f8f8f2">regs.sp</span> <span style="color: #f8f8f2">=</span> <span style="color: #ae81ff">0xFFFE</span><span style="color: #f8f8f2">;</span>
+<span style="color: #f8f8f2">regs.af</span> <span style="color: #f8f8f2">=</span> <span style="color: #ae81ff">0x01B0</span><span style="color: #f8f8f2">;</span>
+<span style="color: #f8f8f2">regs.bc</span> <span style="color: #f8f8f2">=</span> <span style="color: #ae81ff">0x0013</span><span style="color: #f8f8f2">;</span>
+<span style="color: #f8f8f2">regs.de</span> <span style="color: #f8f8f2">=</span> <span style="color: #ae81ff">0x00D8</span><span style="color: #f8f8f2">;</span>
+<span style="color: #f8f8f2">regs.hl</span> <span style="color: #f8f8f2">=</span> <span style="color: #ae81ff">0x014D</span><span style="color: #f8f8f2">;</span>
+<span style="color: #f8f8f2">regs.pc</span> <span style="color: #f8f8f2">=</span> <span style="color: #ae81ff">0x0100</span><span style="color: #f8f8f2">;</span>
+</pre></div>
+</p>
+
+<p>I&rsquo;ll look into the effects of the bootstrap rom on memory later.</p>
 
 <script type="text/javascript"
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">

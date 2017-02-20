@@ -126,6 +126,65 @@ When accessed as one of the two 8-bit integers, either the left or right half of
 
 &lt;p&gt;The only downside that I&amp;rsquo;ve noticed so far is that my editor doesn&amp;rsquo;t like to autocomplete the registers.&lt;/p&gt;
 
+&lt;h1 id=&#34;setting-some-defaults&#34;&gt;Setting some defaults&lt;/h1&gt;
+
+&lt;p&gt;The Gameboy has a &lt;a href=&#34;http://gbdev.gg8.se/wiki/articles/Gameboy_Bootstrap_ROM&#34;&gt;bootstrap rom&lt;/a&gt; (shield your eyes from the content, it&amp;rsquo;s under copyright) that does some housekeeping on boot, then makes itself invisible. These instructions have some side effects, both on the memory and on the registers. To determine the register side effects, I decided to run another emulator with an empty rom, then read the register values. The values I got are as follows:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;Register&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;AF&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;01B0&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;BC&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0013&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;DE&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;00D8&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;HL&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;014D&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;SP&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;FFFE&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;PC&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0100&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;While most games probably don&amp;rsquo;t care about what the initial values of the registers are, I wanted to implement the values anyway for completion sake.
+I set these values after declaring the registers:
+&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #75715e&#34;&gt;// Initialize like the original bootstrap rom&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;regs.sp&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;0xFFFE&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;regs.af&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;0x01B0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;regs.bc&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;0x0013&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;regs.de&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;0x00D8&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;regs.hl&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;0x014D&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;regs.pc&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;0x0100&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;ll look into the effects of the bootstrap rom on memory later.&lt;/p&gt;
+
 &lt;script type=&#34;text/javascript&#34;
   src=&#34;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#34;&gt;
 &lt;/script&gt;

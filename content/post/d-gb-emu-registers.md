@@ -113,6 +113,32 @@ Because the _SP_ and _PC_ have letters that are shared with individual registers
 
 The only downside that I've noticed so far is that my editor doesn't like to autocomplete the registers.
 
+# Setting some defaults
+The Gameboy has a [bootstrap rom](http://gbdev.gg8.se/wiki/articles/Gameboy_Bootstrap_ROM) (shield your eyes from the content, it's under copyright) that does some housekeeping on boot, then makes itself invisible. These instructions have some side effects, both on the memory and on the registers. To determine the register side effects, I decided to run another emulator with an empty rom, then read the register values. The values I got are as follows:
+
+| Register | Value |
+|:--------:|:-----:|
+|    AF    |  01B0 |
+|    BC    |  0013 |
+|    DE    |  00D8 |
+|    HL    |  014D |
+|    SP    |  FFFE |
+|    PC    |  0100 |
+
+While most games probably don't care about what the initial values of the registers are, I wanted to implement the values anyway for completion sake.
+I set these values after declaring the registers:
+{{< highlight D >}}
+// Initialize like the original bootstrap rom
+regs.sp = 0xFFFE;
+regs.af = 0x01B0;
+regs.bc = 0x0013;
+regs.de = 0x00D8;
+regs.hl = 0x014D;
+regs.pc = 0x0100;
+{{< /highlight >}}
+
+I'll look into the effects of the bootstrap rom on memory later.
+
 <script type="text/javascript"
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
