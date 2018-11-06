@@ -34,7 +34,7 @@ Ok then, what's the solution? To get at a better solution, we must consider our 
 Fibers (similar to coroutines, goroutines, deferreds, etc.) are typically used as a way to abstract concurrent computing through "cooperative multitasking". As opposed to having the operating system switch the current thread after a certain amount of time, fibers will typically indicate that they're ready to be switched away by `yield`ing execution to another fiber. Fibers can be implemented entirely in userspace by sharing a single OS thread or be split up to run in parallel. These are super useful when trying to have a lightweight non-blocking single threaded application; as a result, fibers are a common concept applied in server frameworks such as Twisted, Node.js, and Golang.
 
 The D programming language implements first-class support for fibers. Many languages which provide support for fibers or coroutines (such as Go) will include a built-in fiber scheduler which will provide an intelligent mapping between fibers and OS threads, allowing for parallelism. Interestingly, D doesn't constrain us to a specific built-in fiber scheduler. In D, a program is able to call fibers directly, and check their status once they yield. Here's an example adapted from [D's excellent language documentation](https://dlang.org/phobos/core_thread.html#.Fiber):
-```D
+```d
 void fiberFunc()
 {
     counter += 4;

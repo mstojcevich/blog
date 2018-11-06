@@ -8,6 +8,9 @@ theme = "hugo-cactus-theme"
 googleAnalytics = ""
 # Disable comments by leaving disqusShortname empty
 disqusShortname = ""
+# Allow syntax highlighting
+pygmentsCodeFences = true
+pygmentsUseClassic = true  # The new highlighter doesn't like D
 
 [params]
 	name = "Marcus Stojcevich"
