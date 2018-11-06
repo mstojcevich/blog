@@ -1,7 +1,7 @@
 ---
 title: "Using D fibers to implement the Gameboy's timing"
 date: 2018-11-05T22:58:41-05:00
-draft: true
+draft: false
 ---
 
 Hi there! It's been over a year and a half since I last wrote a post about my Gameboy emulator. This time I want to go over an idea I had for a unique-ish strategy of dealing with timing in video game emulators. This is applying the concept of [coroutines](https://en.wikipedia.org/wiki/Coroutine) (1958) to a Gameboy emulator.
